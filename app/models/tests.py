@@ -4,7 +4,7 @@ import database.database as database
 
 Base = db.Base
 
-class Test(BaseModel):
+class Test(Base):
     __tablename__ = "tests"
     
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, index=True)
