@@ -3,7 +3,7 @@ import sqlalchemy
 import database.database as database
 from app.models import diag_center
 
-Base = db.Base
+Base = database.Base
 
 class Test(Base):
     __tablename__ = "tests"

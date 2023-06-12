@@ -1,8 +1,13 @@
 from fastapi import FastAPI
 app = FastAPI()
 import database.database as database # Folder database -> file database.py
+from app.api.endpoints.routes import router as Router # Folder app -> folder api -> file endpoints -> file routes.py
+
 
 db = database.database # file database.py -> variable database
+
+app = FastAPI()
+app.include_router(Router, prefix="/api/v1", tags = ["API"])
 
 
 

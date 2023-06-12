@@ -2,7 +2,7 @@ from datetime import datetime
 import sqlalchemy
 import database.database as database
 
-Base = db.Base
+Base = database.Base
 
 class Diagnostics(Base):
     __tablename__ = "diagnostics"
@@ -11,6 +11,7 @@ class Diagnostics(Base):
     name = sqlalchemy.Column(sqlalchemy.String(100))
     
     class Config:
+        
         schema_extra = {
             "example" : {
                 "name" : "Diagnostics Name"

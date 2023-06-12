@@ -5,7 +5,7 @@ from app.models.tests import Test
 router = APIRouter()
 
 
-@router.post('/diagnostics', response_description="Add new Diagnostics")
+@router.post('/diagnostics', response_description="Add new Diagnostics", response_model=Diagnostics)
 async def add_disgnostic(review: Diagnostics) -> dict:
     await review.create()
     return {"message": "Disgnostic added successfully"}
