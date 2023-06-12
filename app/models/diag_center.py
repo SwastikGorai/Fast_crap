@@ -9,3 +9,10 @@ class Diagnostics(Base):
     
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, index=True)
     name = sqlalchemy.Column(sqlalchemy.String(100))
+    
+    class Config:
+        schema_extra = {
+            "example" : {
+                "name" : "Diagnostics Name"
+            }
+        }
