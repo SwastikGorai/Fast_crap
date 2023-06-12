@@ -1,13 +1,25 @@
 from typing import List, Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+
+from database import database
+
+Session = database.SessionLocal
 
 
 class DiagnosticsBase(BaseModel):
     name: str
     
 class DiagnosticsCreate(DiagnosticsBase):
-    pass
+    
+    @classmethod
+    def create(cls,db : Session = Session, data: DiagnosticsBase = DiagnosticsBase):
+        diagnostics = DiagnosticsBase(**data.dict())
+        db.add(diagnostics)
+        db.commit()
+        db.refresh(diagnostics)
+        return diagnostics
+
 
 class Diagnostics(DiagnosticsBase):
     id: int
