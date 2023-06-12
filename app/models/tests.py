@@ -1,7 +1,8 @@
 from datetime import datetime
-from pydanic import BaseModel
 import sqlalchemy
+import database.database as database
 
+Base = db.Base
 
 class Test(BaseModel):
     __tablename__ = "tests"

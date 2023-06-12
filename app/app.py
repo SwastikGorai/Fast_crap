@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 app = FastAPI()
-import database.database as db
+import database.database as database # Folder database -> file database.py
+
+db = database.database # file database.py -> variable database
 
 
 
