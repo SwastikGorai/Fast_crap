@@ -2,33 +2,29 @@ from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
-import databases
-import sqlalchemy
 
 from alembic import context
-
-import os
 from dotenv import load_dotenv
 load_dotenv()
-
+import os
+from src.app.models.diag_center import Diagnostics
+from src.app.models.tests import Test
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
+
 config = context.config
+if config.config_file_name is not None:
+    fileConfig(config.config_file_name)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
-# config = context.config
-# fileConfig(config.config_file_name)
-
+fileConfig(config.config_file_name)
+from src.database.database import Base
 # add your model's MetaData object here
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-
-# from database.database import Base # <- this is the Base class from database\database.py
-from sqlalchemy.orm import declarative_base
-Base = declarative_base()
-target_metadata = Base.metadata # <- this is the Base class from src\database\database.py
+target_metadata = Base.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
@@ -67,12 +63,14 @@ def run_migrations_online() -> None:
     and associate a connection with the context.
 
     """
-    DATABASE_URL = os.getenv("DATABASE_URL")
-    print(DATABASE_URL)
-    database = databases.Database(DATABASE_URL) # <- this database variable is used in app\app.py as db
-    engine = sqlalchemy.create_engine(DATABASE_URL)
-    connectable = engine
-
+    
+    configuration = config.get_section(config.config_ini_section)
+    configuration["sqlalchemy.url"] = os.getenv("DATABASE_URL")
+    connectable = engine_from_config(
+        configuration,
+        prefix="sqlalchemy.",
+        poolclass=pool.NullPool,
+    )
     with connectable.connect() as connection:
         context.configure(
             connection=connection, target_metadata=target_metadata

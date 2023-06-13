@@ -1,8 +1,8 @@
 from datetime import datetime
 from sqlalchemy.orm import  relationship
 from sqlalchemy import Column, ForeignKey, Integer, String, ForeignKey, Float
-import database.database as database
-from app.models import diag_center
+import src.database.database as database
+from src.app.models import diag_center
 
 Base = database.Base
 
