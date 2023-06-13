@@ -2,8 +2,8 @@ from datetime import datetime
 from sqlalchemy.orm import  relationship
 from sqlalchemy import Column, ForeignKey, Integer, String, ForeignKey, Float
 
-import src.database.database as database
-from src.app.models import tests
+import database.database as database
+from . import tests
 Base = database.Base
 
 class Diagnostics(Base):

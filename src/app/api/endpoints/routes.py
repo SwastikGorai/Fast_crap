@@ -20,7 +20,13 @@ async def add_disgnostic(payload: schemas.DiagnosticsBase, db: Session = Depends
     
     
 
-@router.get('/diagnostics/{id}')
-async def get_disgnostic(db: Session = Depends(get_db)):
-    get_diag = db.query(Diagnostics).filter(Diagnostics.id == id).first()
-    return {'status': 'success', 'data': get_diag}
+@router.get("/diagnostics/{item_id}")
+async def get_disgnostic( item_id: int, db: Session = Depends(get_db)):
+    print(item_id)
+    get = db.query(Diagnostics).get(item_id)
+    return {'status': 'success', 'data': get}
+
+@router.get('/diagnostics')
+async def get_all_diagnostics(db: Session = Depends(get_db)):
+    all_diagnostics = db.query(Diagnostics).all()
+    return {'status': 'success', 'data': all_diagnostics}
